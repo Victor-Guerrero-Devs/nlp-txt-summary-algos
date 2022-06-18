@@ -52,7 +52,32 @@ highest_frequency = max(word_frequency.values())
 for word in word_frequency.keys():
     word_frequency[word] = (word_frequency[word] / highest_frequency)
 
-
 # 3. SENTENCE TOKENIZATION
 
+# create a list that contains the individual sentences
+sentence_list = nltk.sent_tokenize(original_text)
 
+# 4. SCORE THE SENTENCES
+
+# store the sentences in this empty dictionary
+score_sentences = {}
+
+# calculate the score of each sentence
+for sentence in sentence_list:
+    for word in nltk.word_tokenize(sentence.lower()):
+        if sentence not in score_sentences.keys():
+            score_sentences[sentence] = word_frequency[word]
+        else:
+            score_sentences[sentence] += word_frequency[word]
+
+
+# 5. CREATE THE SUMMARY
+
+# import module to extract X number of sentences for the summary
+import heapq
+best_sentences = heapq.nlargest(3, score_sentences, key = score_sentences.get)
+
+# bring the sentences together within a string
+summary = ' '.join(best_sentences)
+
+print(summary)
