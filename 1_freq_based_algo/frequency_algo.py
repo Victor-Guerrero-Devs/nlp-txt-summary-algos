@@ -42,3 +42,17 @@ formatted_text = preprocess(original_text)
 
 # 2. WORD FREQUENCY
 
+# each word in formatted text is now given a frequency value and stored in the dictionary called word_frequency
+word_frequency = nltk.FreqDist(nltk.word_tokenize(formatted_text))
+
+# store the word with the highest frequency
+highest_frequency = max(word_frequency.values())
+
+# calculate the weight of each word in the previous dictionary
+for word in word_frequency.keys():
+    word_frequency[word] = (word_frequency[word] / highest_frequency)
+
+
+# 3. SENTENCE TOKENIZATION
+
+
